@@ -78,10 +78,7 @@ async function callBackend(
         cache: 'no-store',
     });
 
-    console.log('[callBackend]', {
-        path,
-        status: res.status,
-    });
+
 
     return res;
 }
@@ -90,8 +87,6 @@ async function tryRefresh(params: {
     refreshToken: string;
     accessToken?: string;
 }) {
-    console.log('[tryRefresh] start');
-
     const response = await fetch(`${API_BASE_URL}/auth/refresh`, {
         method: 'POST',
         headers: {
@@ -103,12 +98,9 @@ async function tryRefresh(params: {
         cache: 'no-store',
     });
 
-    console.log('[tryRefresh] response status', response.status);
-
     const setCookie = response.headers.get('set-cookie');
 
     if (!response.ok) {
-        console.log('[tryRefresh] FAILED');
         return { ok: false as const };
     }
 
@@ -119,11 +111,6 @@ async function tryRefresh(params: {
     const nextRefreshToken = setCookie
         ? extractCookieValue(setCookie, 'refresh_token')
         : undefined;
-
-    console.log('[tryRefresh] parsed', {
-        hasAccess: !!nextAccessToken,
-        hasRefresh: !!nextRefreshToken,
-    });
 
     if (!nextAccessToken) {
         return { ok: false as const };
@@ -147,12 +134,6 @@ async function serverApiFetchRaw({
     const accessToken = cookieStore.get('access_token')?.value;
     const refreshToken = cookieStore.get('refresh_token')?.value;
 
-    console.log('[serverApiFetch] START', {
-        path,
-        hasAccess: !!accessToken,
-        hasRefresh: !!refreshToken,
-    });
-
     const initialResponse = await callBackend(path, {
         method,
         headers,
@@ -161,10 +142,8 @@ async function serverApiFetchRaw({
         refreshToken,
     });
 
-    console.log('[serverApiFetch] initialResponse', initialResponse.status);
 
     if (initialResponse.status !== 401) {
-        console.log('[serverApiFetch] SUCCESS without refresh');
         return {
             response: initialResponse,
             cookies: { action: 'none' },
@@ -172,7 +151,6 @@ async function serverApiFetchRaw({
     }
 
     if (isAuthRoute(path) || !refreshToken) {
-        console.log('[serverApiFetch] NO REFRESH POSSIBLE → clear');
         return {
             response: initialResponse,
             cookies: { action: 'clear' },
@@ -185,7 +163,6 @@ async function serverApiFetchRaw({
     });
 
     if (!refreshResult.ok || !refreshResult.accessToken) {
-        console.log('[serverApiFetch] REFRESH FAILED → clear');
         return {
             response: initialResponse,
             cookies: { action: 'clear' },
@@ -200,17 +177,13 @@ async function serverApiFetchRaw({
         refreshToken: refreshResult.refreshToken ?? refreshToken,
     });
 
-    console.log('[serverApiFetch] replayResponse', replayResponse.status);
 
     if (replayResponse.status === 401) {
-        console.log('[serverApiFetch] REPLAY FAILED → clear');
         return {
             response: replayResponse,
             cookies: { action: 'clear' },
         };
     }
-
-    console.log('[serverApiFetch] REFRESH SUCCESS → set cookies');
 
     return {
         response: replayResponse,
@@ -253,7 +226,6 @@ export async function serverApiFetch<T = unknown>(
     });
 
     if (!response.ok) {
-        console.log(`[serverApiFetch] Request failed with status ${JSON.stringify(response)}`);
         const errorText = await response.text();
         throw new Error(errorText || `Request failed with status ${response.status}`);
     }

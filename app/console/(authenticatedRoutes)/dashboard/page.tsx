@@ -1,55 +1,22 @@
-import { Heading } from "@/lib/components/ui/heading";
 import { Text } from "@/lib/components/ui/text";
 import { serverApiFetch } from "@/lib/api/fetch/server-api-fetch";
 import { Restaurant } from "@/lib/types/restaurant";
-import { CreateRestaurantForm } from "./create-restaurant-form";
-import { getCurrentUser } from "@/lib/api/auth/get-current-user";
-
-
-
-
+import { CreateRestaurantModalSection } from "./create-restaurant-modal-section";
+import { PageBreadcrumb } from "../../components/page-breadcrumb";
+import { DashboardBreadcrumb } from "./breadcrumb";
 
 export default async function UserDashboard() {
-  const user = await getCurrentUser();
   const restaurants = await serverApiFetch<Restaurant[]>(
     `/restaurant/me`
   );
 
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-3xl flex-col gap-6 p-8">
-      <header className="space-y-3">
-        <Heading as="h1" size="8" weight="bold">
-          Console restaurant
-        </Heading>
-        <Text as="p" size="4" className="text-muted-foreground">
-          Cette page charge les donnees du dashboard cote serveur depuis{" "}
-          <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-sm">
-            /console/dashboard
-          </code>
-          .
-        </Text>
-      </header>
+    <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
+      <PageBreadcrumb>
+        <DashboardBreadcrumb />
+      </PageBreadcrumb>
 
-      <section className="space-y-3 rounded-2xl border bg-card p-5">
-        <Text as="p" size="2" weight="bold">
-          Etat de session
-        </Text>
-        <Text as="p" size="3">
-          Authentifie
-        </Text>
-      </section>
-
-      <section className="space-y-3 rounded-2xl border bg-card p-5">
-        <Text as="p" size="2" weight="bold">
-          Utilisateur
-        </Text>
-        <pre className="overflow-x-auto rounded-xl bg-muted p-4 text-sm leading-6">
-          <code>{JSON.stringify(user, null, 2)}</code>
-        </pre>
-      </section>
-
-
-      <section className="space-y-4 rounded-2xl border bg-card p-5">
+      <section className="space-y-4 rounded-2xl border bg-card p-5 shadow-sm">
         <div className="space-y-1">
           <Text as="p" size="2" weight="bold">
             Restaurants
@@ -94,9 +61,7 @@ export default async function UserDashboard() {
           </div>
         )}
       </section>
-
-      <CreateRestaurantForm />
-
-    </main>
+      <CreateRestaurantModalSection />
+    </div>
   );
 }

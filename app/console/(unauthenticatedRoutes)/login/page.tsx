@@ -14,7 +14,7 @@ const GOOGLE_LOGIN_URL =
 export default function ConsoleLoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const { messages } = useLocale();
-  const login = messages.login;
+  const login = messages.console.login;
 
   return (
     <main className="flex min-h-screen items-center justify-center px-6 py-12">

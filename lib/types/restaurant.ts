@@ -17,3 +17,5 @@ export type Restaurant = {
     createdAt: Date;
     updatedAt: Date;
 }
+
+export type RestaurantCreateInput = Pick<Restaurant, 'name' | 'description' | 'address'>

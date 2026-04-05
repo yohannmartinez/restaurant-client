@@ -40,7 +40,6 @@ async function extractRequestBody(
 }
 
 function applyCookiePatch(response: NextResponse, patch: AuthCookiePatch): void {
-    console.log('[proxy] applying cookie patch', patch.action);
 
     if (patch.action === 'set') {
         response.cookies.set('access_token', patch.accessToken, {
@@ -105,8 +104,6 @@ async function handle(
         headers,
         body,
     });
-
-    console.log('[proxy] cookie patch received', cookies);
 
     const responseHeaders = new Headers();
 
