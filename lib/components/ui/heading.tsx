@@ -44,7 +44,7 @@ const headingSizeClasses: Record<HeadingSize, string> = {
   "5": "text-xl leading-8 tracking-[-0.025em] tracking-tight",
   "6": "text-2xl leading-8 tracking-[-0.03em] tracking-tight",
   "7": "text-3xl leading-10 tracking-[-0.035em] tracking-tight",
-  "8": "text-4xl leading-12 tracking-[-0.04em] tracking-tight",
+  "8": "text-4xl leading-11 tracking-[-0.04em] tracking-tight",
   "9": "text-5xl leading-14 tracking-[-0.045em] tracking-tight",
 };
 
