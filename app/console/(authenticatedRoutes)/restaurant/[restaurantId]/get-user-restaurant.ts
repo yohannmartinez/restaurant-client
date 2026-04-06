@@ -10,7 +10,7 @@ const getUserRestaurants = cache(async () => {
 export async function getUserRestaurant(restaurantId: string) {
     const restaurants = await getUserRestaurants();
     const restaurant =
-        restaurants.find((candidate) => candidate.id === restaurantId) ?? null;
+        restaurants.find((r) => r.id === restaurantId) ?? null;
 
     if (!restaurant) {
         notFound();

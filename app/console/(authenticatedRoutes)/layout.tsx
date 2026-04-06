@@ -5,7 +5,9 @@ import type { Restaurant } from '@/lib/types/restaurant';
 import { redirect } from 'next/navigation';
 import { SidebarInset, SidebarProvider } from '@/lib/components/ui/sidebar';
 import { RestaurantProvider } from '../providers/restaurant-provider';
+import { RestaurantSelectionSync } from '../components/restaurant-selection-sync';
 import { ConsoleSidebar } from '../components/sidebar/sidebar';
+
 const UNAUTHENTICATED_REDIRECT_PATH = '/console/login';
 
 export default async function AuthenticatedConsoleLayout({
@@ -28,6 +30,7 @@ export default async function AuthenticatedConsoleLayout({
     return (
         <AuthProvider initialUser={user}>
             <RestaurantProvider initialRestaurants={restaurants}>
+                <RestaurantSelectionSync />
                 <SidebarProvider>
                     <ConsoleSidebar />
                     <SidebarInset >

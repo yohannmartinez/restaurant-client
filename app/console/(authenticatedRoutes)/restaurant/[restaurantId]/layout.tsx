@@ -1,5 +1,4 @@
 import { getUserRestaurant } from "./get-user-restaurant";
-import { RestaurantRouteSync } from "./restaurant-route-sync";
 
 type RestaurantLayoutProps = {
     children: React.ReactNode;
@@ -18,7 +17,6 @@ export default async function RestaurantLayout({
 
     return (
         <>
-            <RestaurantRouteSync restaurantId={restaurantId} />
             {children}
         </>
     );

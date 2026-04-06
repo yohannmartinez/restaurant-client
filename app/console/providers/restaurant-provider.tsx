@@ -7,32 +7,21 @@ import type { Restaurant } from '@/lib/types/restaurant';
 type RestaurantProviderProps = {
     children: ReactNode;
     initialRestaurants: Restaurant[];
-    initialRestaurantId?: string | null;
 };
 
 export function RestaurantProvider({
     children,
     initialRestaurants,
-    initialRestaurantId,
 }: RestaurantProviderProps) {
-    const defaultRestaurantId = initialRestaurantId ?? null;
-    const [currentRestaurantId, setCurrentRestaurantId] = useState<string | null>(
-        defaultRestaurantId,
-    );
+    const [selectedRestaurantId, setSelectedRestaurantId] = useState<string | null>(null);
 
     const value = useMemo<RestaurantContextValue>(() => {
-        const currentRestaurant =
-            initialRestaurants.find((restaurant) => restaurant.id === currentRestaurantId) ??
-            null;
-
         return {
-            currentRestaurantId,
-            currentRestaurant,
-            hasRestaurants: initialRestaurants.length > 0,
             restaurants: initialRestaurants,
-            setCurrentRestaurantId,
+            selectedRestaurantId,
+            setSelectedRestaurantId,
         };
-    }, [currentRestaurantId, initialRestaurants]);
+    }, [selectedRestaurantId, initialRestaurants]);
 
     return (
         <RestaurantContext.Provider value={value}>
