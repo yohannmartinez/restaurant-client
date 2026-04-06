@@ -2,8 +2,6 @@ import { Text } from "@/lib/components/ui/text";
 import { serverApiFetch } from "@/lib/api/fetch/server-api-fetch";
 import { Restaurant } from "@/lib/types/restaurant";
 import { CreateRestaurantModalSection } from "./create-restaurant-modal-section";
-import { PageBreadcrumb } from "../../components/page-breadcrumb";
-import { DashboardBreadcrumb } from "./breadcrumb";
 
 export default async function UserDashboard() {
   const restaurants = await serverApiFetch<Restaurant[]>(
@@ -11,11 +9,7 @@ export default async function UserDashboard() {
   );
 
   return (
-    <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
-      <PageBreadcrumb>
-        <DashboardBreadcrumb />
-      </PageBreadcrumb>
-
+    <div className="flex w-full flex-col gap-6">
       <section className="space-y-4 rounded-2xl border bg-card p-5 shadow-sm">
         <div className="space-y-1">
           <Text as="p" size="2" weight="bold">

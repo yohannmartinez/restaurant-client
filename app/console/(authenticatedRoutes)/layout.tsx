@@ -1,8 +1,11 @@
 import { getCurrentUser } from '@/lib/api/auth/get-current-user';
+import { serverApiFetch } from '@/lib/api/fetch/server-api-fetch';
 import { AuthProvider } from '@/lib/providers/auth-provider';
+import type { Restaurant } from '@/lib/types/restaurant';
 import { redirect } from 'next/navigation';
-import { NavbarProvider } from '../providers/navbar-provider';
-import { Navbar } from '../components/navbar';
+import { SidebarInset, SidebarProvider } from '@/lib/components/ui/sidebar';
+import { RestaurantProvider } from '../providers/restaurant-provider';
+import { ConsoleSidebar } from '../components/sidebar/sidebar';
 const UNAUTHENTICATED_REDIRECT_PATH = '/console/login';
 
 export default async function AuthenticatedConsoleLayout({
@@ -18,16 +21,22 @@ export default async function AuthenticatedConsoleLayout({
         redirect(UNAUTHENTICATED_REDIRECT_PATH);
     }
 
+    const restaurants = await serverApiFetch<Restaurant[]>('/restaurant/me').catch(
+        () => [],
+    );
+
     return (
         <AuthProvider initialUser={user}>
-            <NavbarProvider>
-                <div className="min-h-screen bg-muted/30">
-                    <Navbar user={user} />
-                    <main className="mx-auto flex w-full max-w-6xl flex-col px-4 py-6 sm:px-6 lg:px-8">
-                        {children}
-                    </main>
-                </div>
-            </NavbarProvider>
+            <RestaurantProvider initialRestaurants={restaurants}>
+                <SidebarProvider>
+                    <ConsoleSidebar />
+                    <SidebarInset >
+                        <main className="flex w-full flex-1 flex-col p-6">
+                            {children}
+                        </main>
+                    </SidebarInset>
+                </SidebarProvider>
+            </RestaurantProvider>
         </AuthProvider>
     );
 }

@@ -4,6 +4,7 @@ import { getCurrentLocale } from "@/lib/i18n/get-locale";
 import { LocaleProvider } from "@/lib/providers/locale-provider";
 import { Toaster } from "@/lib/components/ui/sonner";
 import "./globals.css";
+import { TooltipProvider } from "@/lib/components/ui/tooltip";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,11 +31,13 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <LocaleProvider initialLocale={locale}>{children}</LocaleProvider>
-        <Toaster />
+        <TooltipProvider>
+          <LocaleProvider initialLocale={locale}>{children}</LocaleProvider>
+          <Toaster />
+        </TooltipProvider>
       </body>
     </html>
   );

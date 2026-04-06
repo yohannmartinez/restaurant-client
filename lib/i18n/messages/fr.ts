@@ -30,6 +30,11 @@ export const frMessages = {
         },
     },
     console: {
+        sidebar: {
+            restaurantsTitle: 'Restaurants',
+            restaurantsDescription: 'Change le restaurant actif dans la console.',
+            addRestaurant: 'Ajouter un restaurant',
+        },
         login: {
             title: 'Connexion',
             description:

@@ -35,7 +35,7 @@ export default function ConsoleLoginPage() {
 
         <Button
           size="lg"
-          className="h-12 w-full justify-center rounded-xl"
+          className="h-12 w-full justify-center"
           isLoading={isLoading}
           onClick={() => {
             setIsLoading(true);

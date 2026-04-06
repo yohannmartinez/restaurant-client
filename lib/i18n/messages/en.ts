@@ -30,6 +30,11 @@ export const enMessages = {
         },
     },
     console: {
+        sidebar: {
+            restaurantsTitle: 'Restaurants',
+            restaurantsDescription: 'Switch the active restaurant in the console.',
+            addRestaurant: 'Add a restaurant',
+        },
         navbar: {
             logout: 'Logout',
             feedback: {
