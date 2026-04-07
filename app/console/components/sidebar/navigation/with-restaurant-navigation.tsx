@@ -19,8 +19,8 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from "@/lib/components/ui/sidebar"
-import { useRestaurant } from "@/app/console/hooks/use-restaurant"
-import { getRestaurantIdFromPathname } from "@/app/console/helpers/get-restaurant-id-from-pathname"
+import { useSelectedRestaurant } from "@/app/console/hooks/use-selected-restaurant"
+import { useLocale } from "@/lib/hooks/use-locale"
 import type { Icon } from "@tabler/icons-react"
 
 type RestaurantNavigationItem = {
@@ -36,10 +36,9 @@ type RestaurantNavigationGroup = {
 
 export default function WithRestaurantNavigation() {
     const pathname = usePathname()
-    const { restaurants, selectedRestaurantId } = useRestaurant()
-    const restaurantIdFromPath = getRestaurantIdFromPathname(pathname)
-    const selectedRestaurant =
-        restaurants.find((restaurant) => restaurant.id === selectedRestaurantId) ?? null
+    const { restaurantIdFromPath, selectedRestaurant } = useSelectedRestaurant()
+    const { messages } = useLocale()
+    const translates = messages.console.sidebar.withRestaurant
 
     if (!restaurantIdFromPath || !selectedRestaurant) {
         return null
@@ -47,45 +46,46 @@ export default function WithRestaurantNavigation() {
 
     const restaurantNavigationGroups: RestaurantNavigationGroup[] = [
         {
-            label: "Contenu",
+            label: translates.groups.content,
             items: [
                 {
-                    title: "Menus",
-                    url: `/console/restaurant/${restaurantIdFromPath}/menus`,
-                    icon: IconChefHat,
-                },
-                {
-                    title: "Plats",
+                    title: translates.items.dishes,
                     url: `/console/restaurant/${restaurantIdFromPath}/dishes`,
                     icon: IconToolsKitchen2,
                 },
+                {
+                    title: translates.items.menus,
+                    url: `/console/restaurant/${restaurantIdFromPath}/menus`,
+                    icon: IconChefHat,
+                },
+
             ],
         },
         {
-            label: "Gestion",
+            label: translates.groups.management,
             items: [
                 {
-                    title: "Thème",
+                    title: translates.items.design,
                     url: `/console/restaurant/${restaurantIdFromPath}/design`,
                     icon: IconPalette,
                 },
                 {
-                    title: "Mise en ligne",
+                    title: translates.items.publication,
                     url: `/console/restaurant/${restaurantIdFromPath}/publication`,
                     icon: IconRocket,
                 },
                 {
-                    title: "Equipe",
+                    title: translates.items.team,
                     url: `/console/restaurant/${restaurantIdFromPath}/team`,
                     icon: IconUsersGroup,
                 },
                 {
-                    title: "Analytics",
+                    title: translates.items.analytics,
                     url: `/console/restaurant/${restaurantIdFromPath}/analytics`,
                     icon: IconChartBar,
                 },
                 {
-                    title: "Parametres",
+                    title: translates.items.settings,
                     url: `/console/restaurant/${restaurantIdFromPath}/settings`,
                     icon: IconSettings,
                 },
@@ -101,12 +101,14 @@ export default function WithRestaurantNavigation() {
                         <SidebarMenuItem>
                             <SidebarMenuButton
                                 asChild
-                                tooltip="Tous les restaurants"
-                                className="bg-sidebar-primary font-medium text-sidebar-primary-foreground shadow-sm hover:bg-sidebar-primary/90 hover:text-sidebar-primary-foreground flex justify-center"
+                                tooltip={translates.backToRestaurants}
+                                className="bg-sidebar-primary font-medium text-sidebar-primary-foreground shadow-sm hover:bg-sidebar-primary/90 hover:text-sidebar-primary-foreground group-data-[collapsible=icon]:justify-center"
                             >
                                 <Link href="/console/dashboard">
                                     <IconArrowLeft />
-                                    <span>Tous les restaurants</span>
+                                    <span className="group-data-[collapsible=icon]:hidden">
+                                        {translates.backToRestaurants}
+                                    </span>
                                 </Link>
                             </SidebarMenuButton>
                         </SidebarMenuItem>

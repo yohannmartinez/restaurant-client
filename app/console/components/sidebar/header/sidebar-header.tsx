@@ -25,14 +25,16 @@ import {
 import { useLocale } from "@/lib/hooks/use-locale"
 import { cn } from "@/lib/tailwind/utils"
 import { useRestaurant } from "@/app/console/hooks/use-restaurant"
+import { useSelectedRestaurant } from "@/app/console/hooks/use-selected-restaurant"
+import { Heading } from "@/lib/components/ui/heading"
+import { Text } from "@/lib/components/ui/text"
 
 export default function ConsoleSidebarHeader() {
     const router = useRouter()
     const { messages } = useLocale()
-    const { restaurants, selectedRestaurantId } = useRestaurant()
-    const sidebarMessages = messages.console.sidebar
-    const selectedRestaurant =
-        restaurants.find((restaurant) => restaurant.id === selectedRestaurantId) ?? null
+    const { restaurants } = useRestaurant()
+    const { selectedRestaurant } = useSelectedRestaurant()
+    const translates = messages.console.sidebar.header
     const hasRestaurants = restaurants.length > 0
 
     return (
@@ -44,12 +46,12 @@ export default function ConsoleSidebarHeader() {
                             <PopoverTrigger asChild>
                                 <SidebarMenuButton
                                     size="lg"
-                                    className="cursor-pointer rounded-md border bg-background data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                                    className="cursor-pointer rounded-md border bg-background data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground group-data-[collapsible=icon]:justify-center"
                                 >
-                                    <div className="flex aspect-square size-8 items-center justify-center rounded-sm bg-sidebar-primary text-sidebar-primary-foreground">
+                                    <div className="flex aspect-square size-8 shrink-0 items-center justify-center rounded-sm bg-sidebar-primary text-sidebar-primary-foreground">
                                         <IconBuildingStore className="size-4" />
                                     </div>
-                                    <div className="grid flex-1 text-left text-sm leading-tight">
+                                    <div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
                                         <span className="truncate font-medium">
                                             {selectedRestaurant?.name ?? "Restaurant"}
                                         </span>
@@ -57,14 +59,20 @@ export default function ConsoleSidebarHeader() {
                                             {selectedRestaurant?.slug || "Selectionner"}
                                         </span>
                                     </div>
-                                    <IconArrowsUpDown className="ml-auto size-4" />
+                                    <IconArrowsUpDown className="ml-auto size-4 group-data-[collapsible=icon]:hidden" />
                                 </SidebarMenuButton>
                             </PopoverTrigger>
                             <PopoverContent align="start" className="w-80 p-2">
-                                <PopoverHeader className="px-2 pt-2 pb-1">
-                                    <PopoverTitle>{sidebarMessages.restaurantsTitle}</PopoverTitle>
+                                <PopoverHeader className="px-2 pt-2 pb-1 gap-0">
+                                    <PopoverTitle>
+                                        <Heading size="3" weight="medium">
+                                            {translates.title}
+                                        </Heading>
+                                    </PopoverTitle>
                                     <PopoverDescription>
-                                        {sidebarMessages.restaurantsDescription}
+                                        <Text size="2">
+                                            {translates.description}
+                                        </Text>
                                     </PopoverDescription>
                                 </PopoverHeader>
                                 <div className="flex flex-col gap-1">
@@ -77,7 +85,7 @@ export default function ConsoleSidebarHeader() {
                                                 type="button"
                                                 onClick={() => router.push(`/console/restaurant/${restaurant.id}`)}
                                                 className={cn(
-                                                    "flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left transition hover:bg-muted",
+                                                    "cursor-pointer flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left transition hover:bg-muted",
                                                     isActive && "bg-muted"
                                                 )}
                                             >
@@ -102,7 +110,7 @@ export default function ConsoleSidebarHeader() {
                     ) : (
                         <CreateRestaurantModalSection
                             className="h-12 w-full justify-start rounded-lg px-3"
-                            label={sidebarMessages.addRestaurant}
+                            label={translates.actions.addRestaurant}
                         />
                     )}
                 </SidebarMenuItem>
