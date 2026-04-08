@@ -22,6 +22,7 @@ import {
 import { useSelectedRestaurant } from "@/app/console/hooks/use-selected-restaurant"
 import { useLocale } from "@/lib/hooks/use-locale"
 import type { Icon } from "@tabler/icons-react"
+import { Text } from "@/lib/components/ui/text"
 
 type RestaurantNavigationItem = {
     title: string
@@ -106,9 +107,7 @@ export default function WithRestaurantNavigation() {
                             >
                                 <Link href="/console/dashboard">
                                     <IconArrowLeft />
-                                    <span className="group-data-[collapsible=icon]:hidden">
-                                        {translates.backToRestaurants}
-                                    </span>
+                                    <Text size="2" className="group-data-[collapsible=icon]:hidden"> {translates.backToRestaurants}</Text>
                                 </Link>
                             </SidebarMenuButton>
                         </SidebarMenuItem>
@@ -130,7 +129,7 @@ export default function WithRestaurantNavigation() {
                                     >
                                         <Link href={item.url}>
                                             <item.icon />
-                                            <span>{item.title}</span>
+                                            <Text size="2">{item.title}</Text>
                                         </Link>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>

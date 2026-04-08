@@ -19,6 +19,7 @@ import {
 import { useAuth } from "@/lib/hooks/use-auth"
 import { useLocale } from "@/lib/hooks/use-locale"
 import { toast } from "sonner"
+import { Text } from "@/lib/components/ui/text"
 
 export default function ConsoleSidebarFooter() {
     const router = useRouter()
@@ -52,7 +53,7 @@ export default function ConsoleSidebarFooter() {
     }
 
     return (
-        <SidebarFooter>
+        <SidebarFooter className="border-t">
             <SidebarMenu>
                 <SidebarMenuItem>
                     <Popover>
@@ -60,7 +61,7 @@ export default function ConsoleSidebarFooter() {
                             <SidebarMenuButton
                                 size="lg"
                                 tooltip="Mon compte"
-                                className="group-data-[collapsible=icon]:justify-center"
+                                className="group-data-[collapsible=icon]:justify-center cursor-pointer"
                             >
                                 <div className="flex aspect-square rounded-lg overflow-hidden size-8 shrink-0 items-center justify-center bg-primary text-primary-foreground">
                                     {picture && showPicture ? (
@@ -78,10 +79,12 @@ export default function ConsoleSidebarFooter() {
                                     )}
                                 </div>
                                 <div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
-                                    <span className="truncate font-medium">{fullName}</span>
-                                    <span className="truncate text-xs text-muted-foreground">
+                                    <Text size="2" truncate weight="medium">
+                                        {fullName}
+                                    </Text>
+                                    <Text size="1" className="text-muted-foreground" truncate>
                                         {user?.email}
-                                    </span>
+                                    </Text>
                                 </div>
                             </SidebarMenuButton>
                         </PopoverTrigger>
@@ -93,7 +96,7 @@ export default function ConsoleSidebarFooter() {
                                 isLoading={isLoggingOut}
                             >
                                 <IconLogout />
-                                <span>{logoutLabel}</span>
+                                <Text size="2">{logoutLabel}</Text>
                             </Button>
                         </PopoverContent>
                     </Popover>

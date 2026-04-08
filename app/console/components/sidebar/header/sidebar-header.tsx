@@ -5,9 +5,9 @@ import {
     IconArrowsUpDown,
     IconBuildingStore,
     IconCheck,
+    IconPlus,
 } from "@tabler/icons-react"
 
-import { CreateRestaurantModalSection } from "@/app/console/(authenticatedRoutes)/dashboard/create-restaurant-modal-section"
 import {
     SidebarHeader,
     SidebarMenu,
@@ -28,6 +28,9 @@ import { useRestaurant } from "@/app/console/hooks/use-restaurant"
 import { useSelectedRestaurant } from "@/app/console/hooks/use-selected-restaurant"
 import { Heading } from "@/lib/components/ui/heading"
 import { Text } from "@/lib/components/ui/text"
+import { Button } from "@/lib/components/ui/button"
+import { useState } from "react"
+import { CreateRestaurantModal } from "@/lib/features/modals/create-restaurant.modal"
 
 export default function ConsoleSidebarHeader() {
     const router = useRouter()
@@ -35,14 +38,15 @@ export default function ConsoleSidebarHeader() {
     const { restaurants } = useRestaurant()
     const { selectedRestaurant } = useSelectedRestaurant()
     const translates = messages.console.sidebar.header
-    const hasRestaurants = restaurants.length > 0
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isPopoverOpen, setIsPopoverOpen] = useState(false)
 
     return (
-        <SidebarHeader>
-            <SidebarMenu>
-                <SidebarMenuItem>
-                    {hasRestaurants ? (
-                        <Popover>
+        <>
+            <SidebarHeader>
+                <SidebarMenu>
+                    <SidebarMenuItem>
+                        <Popover open={isPopoverOpen} onOpenChange={() => setIsPopoverOpen(!isPopoverOpen)}>
                             <PopoverTrigger asChild>
                                 <SidebarMenuButton
                                     size="lg"
@@ -52,12 +56,12 @@ export default function ConsoleSidebarHeader() {
                                         <IconBuildingStore className="size-4" />
                                     </div>
                                     <div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
-                                        <span className="truncate font-medium">
-                                            {selectedRestaurant?.name ?? "Restaurant"}
-                                        </span>
-                                        <span className="truncate text-xs text-muted-foreground">
-                                            {selectedRestaurant?.slug || "Selectionner"}
-                                        </span>
+                                        <Heading size="2" weight="medium" truncate>
+                                            {selectedRestaurant?.name ?? translates.title}
+                                        </Heading>
+                                        <Text size="1" className="text-muted-foreground" truncate>
+                                            {selectedRestaurant?.slug ?? translates.text}
+                                        </Text>
                                     </div>
                                     <IconArrowsUpDown className="ml-auto size-4 group-data-[collapsible=icon]:hidden" />
                                 </SidebarMenuButton>
@@ -66,55 +70,70 @@ export default function ConsoleSidebarHeader() {
                                 <PopoverHeader className="px-2 pt-2 pb-1 gap-0">
                                     <PopoverTitle>
                                         <Heading size="3" weight="medium">
-                                            {translates.title}
+                                            {translates.popover.title}
                                         </Heading>
                                     </PopoverTitle>
                                     <PopoverDescription>
                                         <Text size="2">
-                                            {translates.description}
+                                            {translates.popover.description}
                                         </Text>
                                     </PopoverDescription>
                                 </PopoverHeader>
                                 <div className="flex flex-col gap-1">
-                                    {restaurants.map((restaurant) => {
+                                    {restaurants.map((restaurant, index) => {
                                         const isActive = restaurant.id === selectedRestaurant?.id
 
                                         return (
                                             <button
                                                 key={restaurant.id}
                                                 type="button"
-                                                onClick={() => router.push(`/console/restaurant/${restaurant.id}`)}
+                                                onClick={() => {
+                                                    if (!isActive) {
+                                                        router.push(`/console/restaurant/${restaurant.id}`)
+                                                        setIsPopoverOpen(false)
+                                                    }
+                                                }}
                                                 className={cn(
-                                                    "cursor-pointer flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left transition hover:bg-muted",
+                                                    "cursor-pointer flex w-full items-center gap-3 rounded-md px-3 py-2 text-left transition hover:bg-muted",
                                                     isActive && "bg-muted"
                                                 )}
                                             >
-                                                <div className="flex size-8 items-center justify-center rounded-lg bg-sidebar-accent text-sidebar-accent-foreground">
+                                                <div className="flex size-8 items-center justify-center rounded-md bg-sidebar-accent text-sidebar-accent-foreground">
                                                     <IconBuildingStore className="size-4" />
                                                 </div>
                                                 <div className="min-w-0 flex-1">
-                                                    <p className="truncate text-sm font-medium">
+                                                    <Heading size="2" weight="medium" truncate>
                                                         {restaurant.name}
-                                                    </p>
-                                                    <p className="truncate text-xs text-muted-foreground">
+                                                    </Heading>
+                                                    <Text size="1" className="text-muted-foreground" truncate>
                                                         {restaurant.slug}
-                                                    </p>
+                                                    </Text>
                                                 </div>
                                                 {isActive ? <IconCheck className="size-4" /> : null}
                                             </button>
                                         )
                                     })}
+
+
+                                    <Button
+                                        type="button"
+                                        className="mt-2"
+                                        onClick={() => {
+                                            setIsPopoverOpen(false)
+                                            setIsModalOpen(true)
+                                        }}
+                                    >
+                                        <IconPlus className="size-4" />
+                                        <Text size="2">{translates.popover.actions.addRestaurant}</Text>
+                                    </Button>
                                 </div>
                             </PopoverContent>
                         </Popover>
-                    ) : (
-                        <CreateRestaurantModalSection
-                            className="h-12 w-full justify-start rounded-lg px-3"
-                            label={translates.actions.addRestaurant}
-                        />
-                    )}
-                </SidebarMenuItem>
-            </SidebarMenu>
-        </SidebarHeader>
+
+                    </SidebarMenuItem>
+                </SidebarMenu>
+            </SidebarHeader>
+            <CreateRestaurantModal open={isModalOpen} onOpenChange={setIsModalOpen} />
+        </>
     )
 }

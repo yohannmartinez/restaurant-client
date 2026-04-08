@@ -13,11 +13,14 @@ import {
     DialogHeader,
     DialogTitle,
 } from '@/lib/components/ui/dialog';
+import { Field, FieldLabel } from '@/lib/components/ui/field';
+import { Heading } from '@/lib/components/ui/heading';
+import { Input } from '@/lib/components/ui/input';
 import { Text } from '@/lib/components/ui/text';
+import { Textarea } from '@/lib/components/ui/textarea';
 import { useLocale } from '@/lib/hooks/use-locale';
 import type { Restaurant, RestaurantCreateInput } from '@/lib/types/restaurant';
 import { toast } from 'sonner';
-import { Heading } from '@/lib/components/ui/heading';
 
 type CreateRestaurantModalProps = {
     open: boolean;
@@ -34,6 +37,9 @@ export function CreateRestaurantModal({
     open,
     onOpenChange,
 }: CreateRestaurantModalProps) {
+    const nameFieldId = 'create-restaurant-name';
+    const descriptionFieldId = 'create-restaurant-description';
+    const addressFieldId = 'create-restaurant-address';
     const router = useRouter();
     const { messages } = useLocale();
     const translates = messages.features.modals.createRestaurant;
@@ -77,18 +83,25 @@ export function CreateRestaurantModal({
         <Dialog open={open} onOpenChange={handleOpenChange}>
             <DialogContent className='max-w-[600px]'>
                 <DialogHeader>
-                    <DialogTitle>
-                        <Heading size="5" weight='bold'>{translates.title}</Heading>
+                    <DialogTitle asChild>
+                        <Heading as="h2" size="5" className='font-bold'>{translates.title}</Heading>
                     </DialogTitle>
-                    <DialogDescription>{translates.description}</DialogDescription>
+                    <DialogDescription asChild>
+                        <Text as="p" size='2' className='text-muted-foreground'>
+                            {translates.description}
+                        </Text>
+                    </DialogDescription>
                 </DialogHeader>
 
                 <form className="space-y-4" onSubmit={handleSubmit}>
-                    <label className="grid gap-2">
-                        <Text as="span" size="2" weight="medium">
-                            {translates.fields.name}
+                    <Field>
+                        <Text asChild size="2" weight="medium">
+                            <FieldLabel htmlFor={nameFieldId}>
+                                {translates.fields.name}
+                            </FieldLabel>
                         </Text>
-                        <input
+                        <Input
+                            id={nameFieldId}
                             required
                             value={values.name}
                             disabled={isSubmitting}
@@ -99,19 +112,22 @@ export function CreateRestaurantModal({
                                 }))
                             }
                             placeholder={translates.placeholders.name}
-                            className="h-11 rounded-xl border bg-background px-3 text-sm outline-none transition focus:border-ring focus:ring-3 focus:ring-ring/30"
                         />
-                    </label>
+                    </Field>
 
-                    <label className="grid gap-2">
-                        <Text as="span" size="2" weight="medium">
-                            {translates.fields.description}
+                    <Field>
+                        <Text asChild size="2" weight="medium">
+                            <FieldLabel htmlFor={descriptionFieldId}>
+                                {translates.fields.description}
+                            </FieldLabel>
                         </Text>
-                        <textarea
+                        <Textarea
+                            id={descriptionFieldId}
                             required
                             rows={4}
                             value={values.description as string}
                             disabled={isSubmitting}
+                            className='resize-none'
                             onChange={(event) =>
                                 setValues((current) => ({
                                     ...current,
@@ -119,15 +135,17 @@ export function CreateRestaurantModal({
                                 }))
                             }
                             placeholder={translates.placeholders.description}
-                            className="rounded-xl border bg-background px-3 py-2.5 text-sm outline-none transition focus:border-ring focus:ring-3 focus:ring-ring/30"
                         />
-                    </label>
+                    </Field>
 
-                    <label className="grid gap-2">
-                        <Text as="span" size="2" weight="medium">
-                            {translates.fields.address}
+                    <Field>
+                        <Text asChild size="2" weight="medium">
+                            <FieldLabel htmlFor={addressFieldId}>
+                                {translates.fields.address}
+                            </FieldLabel>
                         </Text>
-                        <input
+                        <Input
+                            id={addressFieldId}
                             required
                             value={values.address}
                             disabled={isSubmitting}
@@ -138,20 +156,21 @@ export function CreateRestaurantModal({
                                 }))
                             }
                             placeholder={translates.placeholders.address}
-                            className="h-11 rounded-xl border bg-background px-3 text-sm outline-none transition focus:border-ring focus:ring-3 focus:ring-ring/30"
                         />
-                    </label>
+                    </Field>
 
                     <DialogFooter>
                         <DialogClose asChild>
                             <Button type="button" variant="outline">
-                                {translates.actions.cancel}
+                                <Text size="2">{translates.actions.cancel}</Text>
                             </Button>
                         </DialogClose>
                         <Button type="submit" isLoading={isSubmitting}>
-                            {isSubmitting
-                                ? translates.actions.loading
-                                : translates.actions.submit}
+                            <Text size="2">
+                                {isSubmitting
+                                    ? translates.actions.loading
+                                    : translates.actions.submit}
+                            </Text>
                         </Button>
                     </DialogFooter>
                 </form>

@@ -1,3 +1,5 @@
+import { title } from "process";
+
 export const frMessages = {
     features: {
         modals: {
@@ -32,11 +34,19 @@ export const frMessages = {
     console: {
         sidebar: {
             header: {
-                title: 'Restaurants',
-                description: 'Change le restaurant actif dans la console.',
-                actions: {
-                    addRestaurant: 'Ajouter un restaurant',
-                },
+                title: "Restaurant",
+                text: "Selectionner",
+                popover: {
+                    title: 'Restaurants',
+                    description: 'Change le restaurant actif dans la console.',
+                    actions: {
+                        addRestaurant: 'Ajouter un restaurant',
+                    },
+                }
+            },
+            trigger: {
+                collapse: 'Plier la navbar',
+                expand: 'Deplier la navbar',
             },
             withoutRestaurant: {
                 groups: {

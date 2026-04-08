@@ -32,11 +32,19 @@ export const enMessages = {
     console: {
         sidebar: {
             header: {
-                title: 'Restaurants',
-                description: 'Switch the active restaurant in the console.',
-                actions: {
-                    addRestaurant: 'Add a restaurant',
-                },
+                title: 'Restaurant',
+                text: 'Select',
+                popover: {
+                    title: 'Restaurants',
+                    description: 'Switch the active restaurant in the console.',
+                    actions: {
+                        addRestaurant: 'Add a restaurant',
+                    },
+                }
+            },
+            trigger: {
+                collapse: 'Collapse navbar',
+                expand: 'Expand navbar',
             },
             withoutRestaurant: {
                 groups: {

@@ -10,6 +10,7 @@ import {
 import { usePathname } from "next/navigation";
 import { getRestaurantIdFromPathname } from "@/app/console/helpers/get-restaurant-id-from-pathname";
 import { useLocale } from "@/lib/hooks/use-locale";
+import { Text } from "@/lib/components/ui/text";
 
 export default function WithoutRestaurantNavigation() {
     const pathname = usePathname()
@@ -47,7 +48,7 @@ export default function WithoutRestaurantNavigation() {
                                 >
                                     <Link href={item.url}>
                                         <item.icon />
-                                        <span>{item.title}</span>
+                                        <Text size="2">{item.title}</Text>
                                     </Link>
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
@@ -71,7 +72,7 @@ export default function WithoutRestaurantNavigation() {
                                 >
                                     <Link href={item.url}>
                                         <item.icon />
-                                        <span>{item.title}</span>
+                                        <Text size="2">{item.title}</Text>
                                     </Link>
                                 </SidebarMenuButton>
                             </SidebarMenuItem>

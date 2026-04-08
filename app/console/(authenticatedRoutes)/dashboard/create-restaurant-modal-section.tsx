@@ -5,6 +5,7 @@ import { Button } from '@/lib/components/ui/button';
 import { CreateRestaurantModal } from '@/lib/features/modals/create-restaurant.modal';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { cn } from '@/lib/tailwind/utils';
+import { Text } from '@/lib/components/ui/text';
 
 type CreateRestaurantModalSectionProps = {
     className?: string;
@@ -16,7 +17,7 @@ type CreateRestaurantModalSectionProps = {
 export function CreateRestaurantModalSection({
     className,
     label,
-    size = 'lg',
+    size = "default",
     variant = 'default',
 }: CreateRestaurantModalSectionProps) {
     const [open, setOpen] = useState(false);
@@ -32,7 +33,7 @@ export function CreateRestaurantModalSection({
                 className={cn('rounded-xl', className)}
                 onClick={() => setOpen(true)}
             >
-                {label ?? translates.trigger}
+                <Text size="2">{label ?? translates.trigger}</Text>
             </Button>
 
             <CreateRestaurantModal open={open} onOpenChange={setOpen} />
