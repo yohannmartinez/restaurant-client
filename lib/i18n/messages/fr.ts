@@ -1,5 +1,3 @@
-import { title } from "process";
-
 export const frMessages = {
     features: {
         modals: {
@@ -45,8 +43,8 @@ export const frMessages = {
                 }
             },
             trigger: {
-                collapse: 'Plier la navbar',
-                expand: 'Deplier la navbar',
+                collapse: 'Réduire la barre',
+                expand: 'Agrandir la barre',
             },
             withoutRestaurant: {
                 groups: {
@@ -92,6 +90,32 @@ export const frMessages = {
             loading: 'Redirection en cours...',
             footer:
                 "En continuant, tu accèdes a l'espace privé de gestion de ton restaurant.",
+        },
+        restaurants: {
+            title: 'Restaurants',
+            description: 'Gère les restaurants associés à ton compte.',
+            empty: {
+                title: 'Aucun restaurant pour le moment',
+                description: "Crée ton premier restaurant pour commencer à gérer ton activité depuis la console.",
+            },
+            fields: {
+                slug: 'Slug',
+                status: 'Statut',
+                updatedAt: 'Dernière édition',
+            },
+            statuses: {
+                DRAFT: 'Brouillon',
+                ACTIVE: 'Actif',
+                SUSPENDED: 'Suspendu',
+                ARCHIVED: 'Archivé',
+            },
+            members: (count: number) => count > 1 ? 'membres' : 'membre',
+            actions: {
+                add: 'Créer un restaurant',
+                addDescription: 'Ajoute un nouveau restaurant et centralise sa gestion depuis la console.',
+                view: 'Voir le restaurant',
+                edit: 'Modifier les informations',
+            },
         },
         restaurant: {
             notFound: {

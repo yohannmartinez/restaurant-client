@@ -21,7 +21,7 @@ export default function WithoutRestaurantNavigation() {
     const consoleItems = [
         { title: translates.items.dashboard, url: "/console/dashboard", icon: IconHome },
         { title: translates.items.analytics, url: "#", icon: IconChartBar },
-        { title: translates.items.restaurants, url: "#", icon: IconBuildingStore },
+        { title: translates.items.restaurants, url: "/console/restaurants", icon: IconBuildingStore },
     ]
 
     const supportItems = [

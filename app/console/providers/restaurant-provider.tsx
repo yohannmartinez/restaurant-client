@@ -2,11 +2,11 @@
 
 import { useMemo, type ReactNode } from 'react';
 import { RestaurantContext, type RestaurantContextValue } from '@/app/console/contexts/restaurant-context';
-import type { Restaurant } from '@/lib/types/restaurant';
+import type { RestaurantWithMemberships } from '@/lib/types/restaurant';
 
 type RestaurantProviderProps = {
     children: ReactNode;
-    initialRestaurants: Restaurant[];
+    initialRestaurants: RestaurantWithMemberships[];
 };
 
 export function RestaurantProvider({

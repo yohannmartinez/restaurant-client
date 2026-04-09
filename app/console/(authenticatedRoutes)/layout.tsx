@@ -1,7 +1,7 @@
 import { getCurrentUser } from '@/lib/api/auth/get-current-user';
 import { serverApiFetch } from '@/lib/api/fetch/server-api-fetch';
 import { AuthProvider } from '@/lib/providers/auth-provider';
-import type { Restaurant } from '@/lib/types/restaurant';
+import type { RestaurantWithMemberships } from '@/lib/types/restaurant';
 import { redirect } from 'next/navigation';
 import { SidebarInset, SidebarProvider } from '@/lib/components/ui/sidebar';
 import { RestaurantProvider } from '../providers/restaurant-provider';
@@ -22,7 +22,7 @@ export default async function AuthenticatedConsoleLayout({
         redirect(UNAUTHENTICATED_REDIRECT_PATH);
     }
 
-    const restaurants = await serverApiFetch<Restaurant[]>('/restaurant/me').catch(
+    const restaurants = await serverApiFetch<RestaurantWithMemberships[]>('/restaurant/me').catch(
         () => [],
     );
 

@@ -1,10 +1,10 @@
 'use client';
 
 import { createContext } from 'react';
-import type { Restaurant } from '@/lib/types/restaurant';
+import type { RestaurantWithMemberships } from '@/lib/types/restaurant';
 
 export type RestaurantContextValue = {
-    restaurants: Restaurant[];
+    restaurants: RestaurantWithMemberships[];
 };
 
 export const RestaurantContext = createContext<RestaurantContextValue | null>(null);

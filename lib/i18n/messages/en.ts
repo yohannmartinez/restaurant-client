@@ -91,6 +91,32 @@ export const enMessages = {
             footer:
                 "By continuing, you access your restaurant's private management area.",
         },
+        restaurants: {
+            title: 'Restaurants',
+            description: 'Manage the restaurants linked to your account.',
+            empty: {
+                title: 'No restaurants yet',
+                description: 'Create your first restaurant to start managing your business from the console.',
+            },
+            fields: {
+                slug: 'Slug',
+                status: 'Status',
+                updatedAt: 'Last updated',
+            },
+            statuses: {
+                DRAFT: 'Draft',
+                ACTIVE: 'Active',
+                SUSPENDED: 'Suspended',
+                ARCHIVED: 'Archived',
+            },
+            members: (count: number) => count > 1 ? 'members' : 'member',
+            actions: {
+                add: 'Create a restaurant',
+                addDescription: 'Add a new restaurant and centralize its management from the console.',
+                view: 'View restaurant',
+                edit: 'Edit information',
+            },
+        },
         restaurant: {
             notFound: {
                 title: 'Restaurant not found',
