@@ -2,9 +2,9 @@ import { SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, Side
 import Link from "next/link";
 import {
     IconBuildingStore,
-    IconChartBar,
     IconHelp,
     IconHome,
+    IconMail,
     IconSettings,
 } from "@tabler/icons-react"
 import { usePathname } from "next/navigation";
@@ -20,8 +20,8 @@ export default function WithoutRestaurantNavigation() {
 
     const consoleItems = [
         { title: translates.items.dashboard, url: "/console/dashboard", icon: IconHome },
-        { title: translates.items.analytics, url: "#", icon: IconChartBar },
         { title: translates.items.restaurants, url: "/console/restaurants", icon: IconBuildingStore },
+        { title: translates.items.invitations, url: "/console/invitations", icon: IconMail },
     ]
 
     const supportItems = [

@@ -53,7 +53,7 @@ export const frMessages = {
                 },
                 items: {
                     dashboard: 'Dashboard',
-                    analytics: 'Analytics',
+                    invitations: 'Invitations',
                     restaurants: 'Restaurants',
                     settings: 'Parametres',
                     help: 'Aide',
@@ -70,7 +70,7 @@ export const frMessages = {
                     menus: 'Menus',
                     design: 'Thème',
                     publication: 'Mise en ligne',
-                    team: 'Equipe',
+                    team: 'Membres',
                     analytics: 'Analytics',
                     settings: 'Parametres',
                 },
@@ -104,7 +104,7 @@ export const frMessages = {
                 updatedAt: 'Dernière édition',
             },
             statuses: {
-                DRAFT: 'Brouillon',
+                DRAFT: 'En préparation',
                 ACTIVE: 'Actif',
                 SUSPENDED: 'Suspendu',
                 ARCHIVED: 'Archivé',
@@ -115,6 +115,35 @@ export const frMessages = {
                 addDescription: 'Ajoute un nouveau restaurant et centralise sa gestion depuis la console.',
                 view: 'Voir le restaurant',
                 edit: 'Modifier les informations',
+            },
+        },
+        invitations: {
+            title: 'Invitations',
+            description: "Retrouve ici les restaurants dans lesquels tu as été invité.",
+            badges: {
+                invited: 'Invitation en attente',
+            },
+            actions: {
+                accept: 'Accepter',
+                accepting: 'Acceptation...',
+                decline: 'Refuser',
+                declining: 'Refus...',
+            },
+            feedback: {
+                acceptSuccess: "Invitation acceptée avec succès.",
+                acceptNotFoundError: "Invitation introuvable.",
+                acceptAlreadyAcceptedError: "Cette invitation a déjà été acceptée.",
+                acceptError: "L'acceptation de l'invitation a échoué.",
+                declineSuccess: "Invitation refusée avec succès.",
+                declineNotFoundError: "Invitation introuvable.",
+                declineAlreadyProcessedError: "Cette invitation a déjà été traitée.",
+                declineError: "Le refus de l'invitation a échoué.",
+            },
+            cardDescription: "Ce restaurant t'a invité à rejoindre son espace de gestion.",
+            members: (count: number) => count > 1 ? 'membres' : 'membre',
+            empty: {
+                title: "Aucune invitation pour le moment",
+                description: "Quand un restaurant t'invitera, tu le retrouveras ici.",
             },
         },
         restaurant: {

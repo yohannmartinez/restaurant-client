@@ -2,6 +2,16 @@ type ClientApiFetchOptions = Omit<RequestInit, 'body'> & {
     body?: BodyInit | object | null;
 };
 
+export class ClientApiError extends Error {
+    status: number;
+
+    constructor(message: string, status: number) {
+        super(message);
+        this.name = 'ClientApiError';
+        this.status = status;
+    }
+}
+
 function normalizePath(path: string): string {
     if (path.startsWith('/')) {
         return `/api/proxy${path}`;
@@ -40,7 +50,10 @@ export async function clientApiFetch<T = unknown>(
 
     if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(errorText || `Request failed with status ${response.status}`);
+        throw new ClientApiError(
+            errorText || `Request failed with status ${response.status}`,
+            response.status,
+        );
     }
 
     const contentType = response.headers.get('content-type') ?? '';

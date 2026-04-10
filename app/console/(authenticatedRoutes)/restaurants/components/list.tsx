@@ -42,7 +42,6 @@ export default function RestaurantsList({ restaurants }: { restaurants: Restaura
     const formatDate = new Intl.DateTimeFormat(locale, {
         dateStyle: "medium",
     });
-
     return (
         <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
             {restaurants.map((restaurant) => {
@@ -97,17 +96,17 @@ export default function RestaurantsList({ restaurants }: { restaurants: Restaura
                         </div>
 
                         <div className="mt-auto flex w-full gap-2 flex-wrap">
-                            <Button className="flex-1" asChild>
-                                <Link href={`/console/restaurant/${restaurant.id}`}>
-                                    <Text size="2">
-                                        {translates.actions.view}
-                                    </Text>
-                                </Link>
-                            </Button>
                             <Button className="flex-1" asChild variant="outline">
                                 <Link href={`/console/restaurant/${restaurant.id}/settings`}>
                                     <Text size="2">
                                         {translates.actions.edit}
+                                    </Text>
+                                </Link>
+                            </Button>
+                            <Button className="flex-1" asChild>
+                                <Link href={`/console/restaurant/${restaurant.id}`}>
+                                    <Text size="2">
+                                        {translates.actions.view}
                                     </Text>
                                 </Link>
                             </Button>

@@ -10,6 +10,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
   return (
     <Sonner
       theme={theme as ToasterProps["theme"]}
+      richColors
       className="toaster group"
       icons={{
         success: (
@@ -28,7 +29,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
           <IconLoader className="size-4 animate-spin" />
         ),
       }}
-      position="top-center"
+      position="top-right"
       style={
         {
           "--normal-bg": "var(--popover)",

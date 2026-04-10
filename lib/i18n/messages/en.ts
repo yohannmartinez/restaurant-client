@@ -53,7 +53,7 @@ export const enMessages = {
                 },
                 items: {
                     dashboard: 'Dashboard',
-                    analytics: 'Analytics',
+                    invitations: 'Invitations',
                     restaurants: 'Restaurants',
                     settings: 'Settings',
                     help: 'Help',
@@ -70,7 +70,7 @@ export const enMessages = {
                     menus: 'Menus',
                     design: 'Theme',
                     publication: 'Publish',
-                    team: 'Team',
+                    team: 'Members',
                     analytics: 'Analytics',
                     settings: 'Settings',
                 },
@@ -104,7 +104,7 @@ export const enMessages = {
                 updatedAt: 'Last updated',
             },
             statuses: {
-                DRAFT: 'Draft',
+                DRAFT: 'In preparation',
                 ACTIVE: 'Active',
                 SUSPENDED: 'Suspended',
                 ARCHIVED: 'Archived',
@@ -115,6 +115,35 @@ export const enMessages = {
                 addDescription: 'Add a new restaurant and centralize its management from the console.',
                 view: 'View restaurant',
                 edit: 'Edit information',
+            },
+        },
+        invitations: {
+            title: 'Invitations',
+            description: 'Find the restaurants that invited you here.',
+            badges: {
+                invited: 'Pending invitation',
+            },
+            actions: {
+                accept: 'Accept',
+                accepting: 'Accepting...',
+                decline: 'Decline',
+                declining: 'Declining...',
+            },
+            feedback: {
+                acceptSuccess: 'Invitation accepted successfully.',
+                acceptNotFoundError: 'Invitation not found.',
+                acceptAlreadyAcceptedError: 'This invitation has already been accepted.',
+                acceptError: 'Invitation acceptance failed.',
+                declineSuccess: 'Invitation declined successfully.',
+                declineNotFoundError: 'Invitation not found.',
+                declineAlreadyProcessedError: 'This invitation has already been processed.',
+                declineError: 'Invitation decline failed.',
+            },
+            cardDescription: 'This restaurant invited you to join its management space.',
+            members: (count: number) => count > 1 ? 'members' : 'member',
+            empty: {
+                title: 'No invitations yet',
+                description: 'When a restaurant invites you, it will appear here.',
             },
         },
         restaurant: {
