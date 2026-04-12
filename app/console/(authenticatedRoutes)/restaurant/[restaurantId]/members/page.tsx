@@ -80,13 +80,17 @@ export default async function RestaurantMembersPage({ params }: MembersPageProps
             </section>
 
             <MemberCards
+                restaurantId={restaurantId}
                 members={sortedMembers}
                 isCurrentUserOwner={isCurrentUserOwner}
                 roleLabels={roleLabels}
                 statusLabels={statusLabels}
-                editRoleLabel={translates.actions.editRole}
+                setOwnerLabel={translates.actions.setOwner}
+                setEditorLabel={translates.actions.setEditor}
                 removeLabel={translates.actions.remove}
+                restoreLabel={translates.actions.restore}
                 openMenuLabel={translates.actions.openMenu}
+                currentUser={currentUser}
             />
         </div>
     );

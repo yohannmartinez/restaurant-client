@@ -165,9 +165,19 @@ export const enMessages = {
                 description: (restaurantName: string) => `Find the access and roles for ${restaurantName} here.`,
                 memberLabel: (userId: string) => `User ${userId.slice(0, 8)}`,
                 actions: {
-                    editRole: 'Edit role',
+                    setOwner: 'Set as owner',
+                    setEditor: 'Set as editor',
                     remove: 'Remove from restaurant',
+                    restore: 'Restore access to this restaurant',
                     openMenu: 'Open actions menu',
+                },
+                feedback: {
+                    updateRoleSuccess: "The member's role was updated.",
+                    updateRoleError: "The member's role could not be updated.",
+                    revokeMemberSuccess: 'The member was removed from the restaurant.',
+                    revokeMemberError: 'The member could not be removed from the restaurant.',
+                    restoreMemberSuccess: "The member's access to the restaurant was restored.",
+                    restoreMemberError: "The member's access could not be restored.",
                 },
                 fields: {
                     role: 'Role',
@@ -182,6 +192,7 @@ export const enMessages = {
                     INVITED: 'Invited',
                     REVOKED: 'Revoked',
                 },
+                emptySearch: 'No users match this search.',
                 empty: 'No members are linked to this restaurant yet.',
             },
             notFound: {

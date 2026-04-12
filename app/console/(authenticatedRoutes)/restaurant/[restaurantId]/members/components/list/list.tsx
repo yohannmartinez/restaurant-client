@@ -4,30 +4,42 @@ import { useEffect, useMemo, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/lib/components/ui/avatar";
 import { Heading } from "@/lib/components/ui/heading";
 import { Text } from "@/lib/components/ui/text";
+import { useLocale } from "@/lib/hooks/use-locale";
 import { MembershipStatus, RestaurantMemberProfile, RestaurantRole } from "@/lib/types/restaurant-membership";
 import MemberActionsMenu from "./components/member-actions-menu";
 import MemberCardBadges from "./components/member-card-badges";
 import MemberSearchBar from "./components/member-search-bar";
+import { AuthenticatedUser } from "@/lib/types/auth";
 
 type MemberCardsProps = {
+    restaurantId: string;
     members: RestaurantMemberProfile[];
     isCurrentUserOwner: boolean;
     roleLabels: Record<RestaurantRole, string>;
     statusLabels: Record<MembershipStatus, string>;
-    editRoleLabel: string;
+    setOwnerLabel: string;
+    setEditorLabel: string;
     removeLabel: string;
+    restoreLabel: string;
     openMenuLabel: string;
+    currentUser: AuthenticatedUser
 };
 
 export default function MemberCards({
+    restaurantId,
     members,
     isCurrentUserOwner,
     roleLabels,
     statusLabels,
-    editRoleLabel,
+    setOwnerLabel,
+    setEditorLabel,
     removeLabel,
+    restoreLabel,
     openMenuLabel,
+    currentUser
 }: MemberCardsProps) {
+    const { messages } = useLocale();
+    const translates = messages.console.restaurant.members;
     const [search, setSearch] = useState("");
     const [debouncedSearch, setDebouncedSearch] = useState("");
     const isSearching = search.trim().toLowerCase() !== debouncedSearch;
@@ -87,11 +99,17 @@ export default function MemberCards({
                                             </Text>
                                         </div>
                                     </div>
-                                    {isCurrentUserOwner ? (
+                                    {isCurrentUserOwner && member.userId !== currentUser.id ? (
                                         <div className="shrink-0">
                                             <MemberActionsMenu
-                                                editRoleLabel={editRoleLabel}
+                                                restaurantId={restaurantId}
+                                                userId={member.userId}
+                                                currentRole={member.role}
+                                                currentStatus={member.status}
+                                                setOwnerLabel={setOwnerLabel}
+                                                setEditorLabel={setEditorLabel}
                                                 removeLabel={removeLabel}
+                                                restoreLabel={restoreLabel}
                                                 openMenuLabel={openMenuLabel}
                                             />
                                         </div>
@@ -110,7 +128,7 @@ export default function MemberCards({
             ) : (
                 <div className="rounded-xl border border-dashed bg-muted/20 p-5">
                     <Text as="p" size="2" className="text-muted-foreground">
-                        Aucun utilisateur ne correspond à cette recherche.
+                        {translates.emptySearch}
                     </Text>
                 </div>
             )}

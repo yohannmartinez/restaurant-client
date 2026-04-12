@@ -165,9 +165,19 @@ export const frMessages = {
                 description: (restaurantName: string) => `Retrouve ici les accès et rôles des membres de ${restaurantName}.`,
                 memberLabel: (userId: string) => `Utilisateur ${userId.slice(0, 8)}`,
                 actions: {
-                    editRole: 'Modifier le role',
+                    setOwner: 'Définir propriétaire',
+                    setEditor: 'Définir éditeur',
                     remove: 'Retirer de ce restaurant',
+                    restore: "Redonner l'accès à ce restaurant",
                     openMenu: "Ouvrir le menu d'actions",
+                },
+                feedback: {
+                    updateRoleSuccess: 'Le rôle du membre a bien été mis à jour.',
+                    updateRoleError: "Impossible de mettre à jour le rôle du membre.",
+                    revokeMemberSuccess: 'Le membre a bien été retiré du restaurant.',
+                    revokeMemberError: "Impossible de retirer ce membre du restaurant.",
+                    restoreMemberSuccess: "L'accès du membre au restaurant a bien été rétabli.",
+                    restoreMemberError: "Impossible de redonner l'accès à ce membre.",
                 },
                 fields: {
                     role: 'Rôle',
@@ -182,6 +192,7 @@ export const frMessages = {
                     INVITED: 'Invité',
                     REVOKED: 'Révoqué',
                 },
+                emptySearch: 'Aucun utilisateur ne correspond à cette recherche.',
                 empty: "Aucun membre n'est associé à ce restaurant pour le moment.",
             },
             notFound: {
