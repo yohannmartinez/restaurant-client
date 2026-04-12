@@ -27,6 +27,26 @@ export const frMessages = {
                     error: 'La création du restaurant a échoué.',
                 },
             },
+            inviteMember: {
+                title: 'Ajouter un membre',
+                description: "Invite un utilisateur dans ce restaurant à partir de son adresse email.",
+                fields: {
+                    email: 'Email',
+                    role: 'Rôle',
+                },
+                placeholders: {
+                    email: 'membre@restaurant.fr',
+                },
+                actions: {
+                    cancel: 'Annuler',
+                    submit: 'Inviter',
+                    loading: 'Invitation...',
+                },
+                feedback: {
+                    success: 'Invitation envoyée avec succès.',
+                    error: "L'invitation du membre a échoué.",
+                },
+            },
         },
     },
     console: {
@@ -165,6 +185,7 @@ export const frMessages = {
                 description: (restaurantName: string) => `Retrouve ici les accès et rôles des membres de ${restaurantName}.`,
                 memberLabel: (userId: string) => `Utilisateur ${userId.slice(0, 8)}`,
                 actions: {
+                    addMember: 'Ajouter un membre',
                     setOwner: 'Définir propriétaire',
                     setEditor: 'Définir éditeur',
                     remove: 'Retirer de ce restaurant',
@@ -192,6 +213,7 @@ export const frMessages = {
                     INVITED: 'Invité',
                     REVOKED: 'Révoqué',
                 },
+                searchPlaceholder: 'Chercher un utilisateur',
                 emptySearch: 'Aucun utilisateur ne correspond à cette recherche.',
                 empty: "Aucun membre n'est associé à ce restaurant pour le moment.",
             },

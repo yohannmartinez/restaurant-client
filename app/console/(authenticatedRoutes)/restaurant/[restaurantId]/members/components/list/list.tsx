@@ -1,11 +1,14 @@
 'use client'
 
 import { useEffect, useMemo, useState } from "react";
+import { IconUserPlus } from "@tabler/icons-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/lib/components/ui/avatar";
+import { Button } from "@/lib/components/ui/button";
 import { Heading } from "@/lib/components/ui/heading";
 import { Text } from "@/lib/components/ui/text";
 import { useLocale } from "@/lib/hooks/use-locale";
 import { MembershipStatus, RestaurantMemberProfile, RestaurantRole } from "@/lib/types/restaurant-membership";
+import { InviteMemberModal } from "@/lib/features/modals/invite-member.modal";
 import MemberActionsMenu from "./components/member-actions-menu";
 import MemberCardBadges from "./components/member-card-badges";
 import MemberSearchBar from "./components/member-search-bar";
@@ -42,6 +45,7 @@ export default function MemberCards({
     const translates = messages.console.restaurant.members;
     const [search, setSearch] = useState("");
     const [debouncedSearch, setDebouncedSearch] = useState("");
+    const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
     const isSearching = search.trim().toLowerCase() !== debouncedSearch;
 
     useEffect(() => {
@@ -67,7 +71,17 @@ export default function MemberCards({
 
     return (
         <div className="flex flex-col gap-4">
-            <MemberSearchBar isSearching={isSearching} value={search} onChange={setSearch} />
+            <div className="flex gap-3 flex-row items-center">
+                <div className="min-w-0 flex-1">
+                    <MemberSearchBar isSearching={isSearching} value={search} onChange={setSearch} />
+                </div>
+                {isCurrentUserOwner ? (
+                    <Button type="button" className="border border-primary" onClick={() => setIsInviteModalOpen(true)}>
+                        <IconUserPlus className="size-4" />
+                        <Text size="2" className="hidden sm:block">{translates.actions.addMember}</Text>
+                    </Button>
+                ) : null}
+            </div>
 
             {filteredMembers.length > 0 ? (
                 <section className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
@@ -132,6 +146,13 @@ export default function MemberCards({
                     </Text>
                 </div>
             )}
+
+            <InviteMemberModal
+                open={isInviteModalOpen}
+                onOpenChange={setIsInviteModalOpen}
+                restaurantId={restaurantId}
+                showRoleSelection={false}
+            />
         </div>
     );
 }

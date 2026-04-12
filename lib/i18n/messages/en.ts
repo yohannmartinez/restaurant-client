@@ -27,6 +27,26 @@ export const enMessages = {
                     error: 'Restaurant creation failed.',
                 },
             },
+            inviteMember: {
+                title: 'Add a member',
+                description: 'Invite a user to this restaurant using their email address.',
+                fields: {
+                    email: 'Email',
+                    role: 'Role',
+                },
+                placeholders: {
+                    email: 'member@restaurant.com',
+                },
+                actions: {
+                    cancel: 'Cancel',
+                    submit: 'Invite',
+                    loading: 'Inviting...',
+                },
+                feedback: {
+                    success: 'Invitation sent successfully.',
+                    error: 'Member invitation failed.',
+                },
+            },
         },
     },
     console: {
@@ -165,6 +185,7 @@ export const enMessages = {
                 description: (restaurantName: string) => `Find the access and roles for ${restaurantName} here.`,
                 memberLabel: (userId: string) => `User ${userId.slice(0, 8)}`,
                 actions: {
+                    addMember: 'Add a member',
                     setOwner: 'Set as owner',
                     setEditor: 'Set as editor',
                     remove: 'Remove from restaurant',
@@ -192,6 +213,7 @@ export const enMessages = {
                     INVITED: 'Invited',
                     REVOKED: 'Revoked',
                 },
+                searchPlaceholder: 'Search for a user',
                 emptySearch: 'No users match this search.',
                 empty: 'No members are linked to this restaurant yet.',
             },

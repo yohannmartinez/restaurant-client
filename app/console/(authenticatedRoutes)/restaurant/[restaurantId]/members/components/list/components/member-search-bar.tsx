@@ -1,6 +1,7 @@
 'use client'
 
 import { IconLoader2, IconSearch } from "@tabler/icons-react";
+import { useLocale } from "@/lib/hooks/use-locale";
 import { Input } from "@/lib/components/ui/input";
 
 type MemberSearchBarProps = {
@@ -14,6 +15,9 @@ export default function MemberSearchBar({
     value,
     onChange,
 }: MemberSearchBarProps) {
+    const { messages } = useLocale();
+    const translates = messages.console.restaurant.members;
+
     return (
         <div className="relative">
             {isSearching ? (
@@ -24,7 +28,7 @@ export default function MemberSearchBar({
             <Input
                 value={value}
                 onChange={(event) => onChange(event.target.value)}
-                placeholder="Chercher un utilisateur"
+                placeholder={translates.searchPlaceholder}
                 className="pl-9"
             />
         </div>
