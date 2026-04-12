@@ -4,34 +4,24 @@ import { Text } from "@/lib/components/ui/text";
 import { serverApiFetch } from "@/lib/api/fetch/server-api-fetch";
 import { getCurrentLocale } from "@/lib/i18n/get-locale";
 import { getMessages } from "@/lib/i18n/messages";
-import { MembershipStatus, RestaurantRole } from "@/lib/types/restaurant-membership";
+import { MembershipStatus, RestaurantMemberProfile, RestaurantRole } from "@/lib/types/restaurant-membership";
 import { getUserRestaurant } from "../(page)/get-user-restaurant";
 import { GetRestaurantMembersResult } from "@/lib/types/restaurant";
-import MemberCards from "./components/list/list";
+import MemberAdd from "./components/member-add";
+import MemberSearchBar from "./components/list/components/member-search-bar";
+import MemberList from "./components/list/list";
 
 type MembersPageProps = {
     params: Promise<{
         restaurantId: string;
     }>;
+    searchParams: Promise<{
+        search?: string | string[];
+    }>;
 };
 
-export default async function RestaurantMembersPage({ params }: MembersPageProps) {
-    const currentUser = await getCurrentUser();
-    const locale = await getCurrentLocale();
-    const messages = getMessages(locale);
-    const translates = messages.console.restaurant.members;
-    const { restaurantId } = await params;
-    const restaurant = await getUserRestaurant(restaurantId);
-    const members = await serverApiFetch<GetRestaurantMembersResult>(
-        `/restaurant/${restaurantId}/members`,
-    );
-    const isCurrentUserOwner = restaurant.memberships.some((membership) => (
-        membership.userId === currentUser.id &&
-        membership.role === RestaurantRole.OWNER &&
-        membership.status === MembershipStatus.ACTIVE
-    ));
-
-    const sortedMembers = [...members].sort((a, b) => {
+function sortMembers(members: RestaurantMemberProfile[]) {
+    return [...members].sort((a, b) => {
         const roleOrder = {
             [RestaurantRole.OWNER]: 0,
             [RestaurantRole.EDITOR]: 1,
@@ -50,6 +40,42 @@ export default async function RestaurantMembersPage({ params }: MembersPageProps
 
         return statusOrder[a.status] - statusOrder[b.status];
     });
+}
+
+function filterMembers(members: RestaurantMemberProfile[], search: string) {
+    if (!search) {
+        return members;
+    }
+
+    return members.filter((member) => {
+        const fullName = `${member.firstName ?? ""} ${member.lastName ?? ""}`.trim().toLowerCase();
+        const email = member.email.toLowerCase();
+
+        return fullName.includes(search) || email.includes(search);
+    });
+}
+
+export default async function RestaurantMembersPage({ params, searchParams }: MembersPageProps) {
+    const currentUser = await getCurrentUser();
+    const locale = await getCurrentLocale();
+    const messages = getMessages(locale);
+    const translates = messages.console.restaurant.members;
+    const { restaurantId } = await params;
+    const resolvedSearchParams = await searchParams;
+    const restaurant = await getUserRestaurant(restaurantId);
+    const members = await serverApiFetch<GetRestaurantMembersResult>(
+        `/restaurant/${restaurantId}/members`,
+    );
+    const rawSearch = resolvedSearchParams.search;
+    const search = (Array.isArray(rawSearch) ? rawSearch[0] : rawSearch ?? "").trim().toLowerCase();
+    const isCurrentUserOwner = restaurant.memberships.some((membership) => (
+        membership.userId === currentUser.id &&
+        membership.role === RestaurantRole.OWNER &&
+        membership.status === MembershipStatus.ACTIVE
+    ));
+
+    const sortedMembers = sortMembers(members);
+    const filteredMembers = filterMembers(sortedMembers, search);
 
     const roleLabels = {
         [RestaurantRole.OWNER]: translates.roles.OWNER,
@@ -79,19 +105,29 @@ export default async function RestaurantMembersPage({ params }: MembersPageProps
                 </Text>
             </section>
 
-            <MemberCards
-                restaurantId={restaurantId}
-                members={sortedMembers}
-                isCurrentUserOwner={isCurrentUserOwner}
-                roleLabels={roleLabels}
-                statusLabels={statusLabels}
-                setOwnerLabel={translates.actions.setOwner}
-                setEditorLabel={translates.actions.setEditor}
-                removeLabel={translates.actions.remove}
-                restoreLabel={translates.actions.restore}
-                openMenuLabel={translates.actions.openMenu}
-                currentUser={currentUser}
-            />
+            <div className="flex flex-col gap-4">
+                <div className="flex flex-row items-center gap-3">
+                    <div className="min-w-0 flex-1">
+                        <MemberSearchBar initialValue={Array.isArray(rawSearch) ? rawSearch[0] : rawSearch ?? ""} />
+                    </div>
+                    {isCurrentUserOwner ? <MemberAdd restaurantId={restaurantId} /> : null}
+                </div>
+
+                <MemberList
+                    restaurantId={restaurantId}
+                    members={filteredMembers}
+                    isCurrentUserOwner={isCurrentUserOwner}
+                    roleLabels={roleLabels}
+                    statusLabels={statusLabels}
+                    setOwnerLabel={translates.actions.setOwner}
+                    setEditorLabel={translates.actions.setEditor}
+                    removeLabel={translates.actions.remove}
+                    restoreLabel={translates.actions.restore}
+                    openMenuLabel={translates.actions.openMenu}
+                    currentUser={currentUser}
+                    emptySearchLabel={translates.list.emptySearch}
+                />
+            </div>
         </div>
     );
 }

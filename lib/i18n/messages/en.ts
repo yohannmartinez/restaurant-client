@@ -27,6 +27,27 @@ export const enMessages = {
                     error: 'Restaurant creation failed.',
                 },
             },
+            inviteMember: {
+                title: 'Add a member',
+                description: 'Invite a user to this restaurant using their email address.',
+                trigger: 'Add a member',
+                fields: {
+                    email: 'Email',
+                    role: 'Role',
+                },
+                placeholders: {
+                    email: 'member@restaurant.com',
+                },
+                actions: {
+                    cancel: 'Cancel',
+                    submit: 'Invite',
+                    loading: 'Inviting...',
+                },
+                feedback: {
+                    success: 'Invitation sent successfully.',
+                    error: 'Member invitation failed.',
+                },
+            },
         },
     },
     console: {
@@ -192,7 +213,10 @@ export const enMessages = {
                     INVITED: 'Invited',
                     REVOKED: 'Revoked',
                 },
-                emptySearch: 'No users match this search.',
+                list: {
+                    searchPlaceholder: 'Search for a user',
+                    emptySearch: 'No users match this search.',
+                },
                 empty: 'No members are linked to this restaurant yet.',
             },
             notFound: {

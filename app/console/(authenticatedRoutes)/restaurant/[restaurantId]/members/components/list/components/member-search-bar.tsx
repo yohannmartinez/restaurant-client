@@ -1,19 +1,58 @@
 'use client'
 
+import { useEffect, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { IconLoader2, IconSearch } from "@tabler/icons-react";
 import { Input } from "@/lib/components/ui/input";
+import { useLocale } from "@/lib/hooks/use-locale";
 
 type MemberSearchBarProps = {
-    isSearching: boolean;
-    value: string;
-    onChange: (value: string) => void;
+    initialValue?: string;
 };
 
 export default function MemberSearchBar({
-    isSearching,
-    value,
-    onChange,
+    initialValue = "",
 }: MemberSearchBarProps) {
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const { messages } = useLocale();
+    const memberListTranslations = messages.console.restaurant.members.list;
+    const [value, setValue] = useState(initialValue);
+    const [debouncedValue, setDebouncedValue] = useState(initialValue.trim().toLowerCase());
+    const normalizedValue = value.trim().toLowerCase();
+    const isSearching = normalizedValue !== debouncedValue;
+
+    useEffect(() => {
+        setValue(initialValue);
+        setDebouncedValue(initialValue.trim().toLowerCase());
+    }, [initialValue]);
+
+    useEffect(() => {
+        const timeout = window.setTimeout(() => {
+            const nextSearch = value.trim();
+            const currentSearch = searchParams.get("search") ?? "";
+
+            if (nextSearch === currentSearch) {
+                setDebouncedValue(nextSearch.toLowerCase());
+                return;
+            }
+
+            const params = new URLSearchParams(searchParams.toString());
+
+            if (nextSearch) {
+                params.set("search", nextSearch);
+            } else {
+                params.delete("search");
+            }
+
+            router.replace(params.toString() ? `${pathname}?${params.toString()}` : pathname);
+            setDebouncedValue(nextSearch.toLowerCase());
+        }, 500);
+
+        return () => window.clearTimeout(timeout);
+    }, [pathname, router, searchParams, value]);
+
     return (
         <div className="relative">
             {isSearching ? (
@@ -23,8 +62,8 @@ export default function MemberSearchBar({
             )}
             <Input
                 value={value}
-                onChange={(event) => onChange(event.target.value)}
-                placeholder="Chercher un utilisateur"
+                onChange={(event) => setValue(event.target.value)}
+                placeholder={memberListTranslations.searchPlaceholder}
                 className="pl-9"
             />
         </div>

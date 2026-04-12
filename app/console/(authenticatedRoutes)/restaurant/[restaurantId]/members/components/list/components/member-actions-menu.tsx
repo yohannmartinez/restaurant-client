@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { IconCrown, IconDots, IconUserMinus, IconUserPlus } from "@tabler/icons-react";
+import { IconDots, IconShield, IconUserMinus, IconUserPlus } from "@tabler/icons-react";
 import { Button } from "@/lib/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/lib/components/ui/popover";
 import { Text } from "@/lib/components/ui/text";
@@ -137,7 +137,7 @@ export default function MemberActionsMenu({
                         isLoading={isUpdatingRole}
                         onClick={handleUpdateRole}
                     >
-                        <IconCrown className="size-4" />
+                        <IconShield className="size-4" />
                         <Text size="2">{roleActionLabel}</Text>
                     </Button>
                     <Button
