@@ -1,14 +1,14 @@
 import { getCurrentUser } from "@/lib/api/auth/get-current-user";
 import { serverApiFetch } from "@/lib/api/fetch/server-api-fetch";
 import { MembershipStatus } from "@/lib/types/restaurant-membership";
-import type { RestaurantWithMemberships } from "@/lib/types/restaurant";
+import type { getUserRestaurantResult } from "@/lib/types/restaurant";
 import RestaurantsHeader from "./components/header";
 import RestaurantsList from "./components/list";
 import NoRestaurant from "./components/noRestaurant";
 
 export default async function RestaurantsPage() {
     const user = await getCurrentUser();
-    const restaurants = await serverApiFetch<RestaurantWithMemberships[]>(
+    const restaurants = await serverApiFetch<getUserRestaurantResult[]>(
         `/restaurant/me`
     );
 

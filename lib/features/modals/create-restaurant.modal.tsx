@@ -51,7 +51,7 @@ export function CreateRestaurantModal({
         setIsSubmitting(true);
 
         try {
-            await clientApiFetch<Restaurant>('/restaurant/create', {
+            await clientApiFetch('/restaurant/create', {
                 method: 'POST',
                 body: {
                     name: values.name.trim(),

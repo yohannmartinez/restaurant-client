@@ -1,14 +1,14 @@
 'use client'
 
-import { IconMail } from "@tabler/icons-react";
+import { IconClock, IconUsers } from "@tabler/icons-react";
 import { Heading } from "@/lib/components/ui/heading";
 import { Text } from "@/lib/components/ui/text";
 import { useLocale } from "@/lib/hooks/use-locale";
-import type { RestaurantWithMemberships } from "@/lib/types/restaurant";
+import type { getUserRestaurantResult } from "@/lib/types/restaurant";
 import AcceptInvitationButton from "./components/accept-invitation-button";
 import DeclineInvitationButton from "./components/decline-invitation-button";
 
-export default function InvitationsList({ restaurants }: { restaurants: RestaurantWithMemberships[] }) {
+export default function InvitationsList({ restaurants }: { restaurants: getUserRestaurantResult[] }) {
     const { messages } = useLocale();
     const translates = messages.console.invitations;
 
@@ -24,15 +24,15 @@ export default function InvitationsList({ restaurants }: { restaurants: Restaura
                     </Heading>
 
                     <div className="flex flex-wrap gap-2">
-                        <div className="flex w-fit items-center gap-2 rounded-md border border-blue-200 bg-blue-500/10 px-3 py-1 dark:border-blue-500/30 dark:bg-blue-500/15">
-                            <IconMail className="size-3.5 text-blue-600 dark:text-blue-400" />
-                            <Text size="1" className="text-blue-700 dark:text-blue-300">
+                        <div className="flex w-fit items-center gap-2 rounded-md border border-amber-200 bg-amber-500/10 px-3 py-1 dark:border-amber-500/30 dark:bg-amber-500/15">
+                            <IconClock className="size-3.5 text-amber-700 dark:text-amber-400" />
+                            <Text size="1" className="text-amber-700 dark:text-amber-400">
                                 {translates.badges.invited}
                             </Text>
                         </div>
-                        <div className="flex w-fit items-center gap-2 rounded-md border px-3 py-1">
-                            <div className="size-2 rounded-full bg-foreground/60" />
-                            <Text size="1" className="text-muted-foreground">
+                        <div className="flex w-fit items-center gap-2 rounded-md border border-blue-200 bg-blue-500/10 px-3 py-1 dark:border-blue-500/30 dark:bg-blue-500/15">
+                            <IconUsers className="size-3.5 shrink-0 text-blue-700 dark:text-blue-300" />
+                            <Text size="1" className="text-blue-700 dark:text-blue-300">
                                 {restaurant.memberships.length} {translates.members(restaurant.memberships.length)}
                             </Text>
                         </div>

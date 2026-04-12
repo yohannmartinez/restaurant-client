@@ -1,10 +1,10 @@
 import { Text } from "@/lib/components/ui/text";
 import { serverApiFetch } from "@/lib/api/fetch/server-api-fetch";
-import { RestaurantWithMemberships } from "@/lib/types/restaurant";
+import { getUserRestaurantResult } from "@/lib/types/restaurant";
 import { CreateRestaurantModalSection } from "./create-restaurant-modal-section";
 
 export default async function UserDashboard() {
-  const restaurants = await serverApiFetch<RestaurantWithMemberships[]>(
+  const restaurants = await serverApiFetch<getUserRestaurantResult[]>(
     `/restaurant/me`
   );
 

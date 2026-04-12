@@ -24,3 +24,14 @@ export type RestaurantMembership = {
     role: RestaurantRole;
     invitedByUserId: string | null;
 }
+
+export type RestaurantMemberProfile = {
+    userId: string;
+    email: string;
+    firstName: string | null;
+    lastName: string | null;
+    picture: string | null;
+    role: RestaurantRole;
+    status: MembershipStatus;
+    createdAt: Date;
+};

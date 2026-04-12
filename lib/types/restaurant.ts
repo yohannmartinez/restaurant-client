@@ -1,4 +1,4 @@
-import { RestaurantMembership } from "./restaurant-membership";
+import { RestaurantMemberProfile, RestaurantMembership } from "./restaurant-membership";
 
 export const RestaurantStatus = {
     DRAFT: 'DRAFT',
@@ -22,6 +22,8 @@ export type Restaurant = {
 
 export type RestaurantCreateInput = Pick<Restaurant, 'name' | 'description' | 'address'>
 
-export type RestaurantWithMemberships = Restaurant & {
+export type getUserRestaurantResult = Restaurant & {
     memberships: RestaurantMembership[];
 }
+
+export type GetRestaurantMembersResult = RestaurantMemberProfile[];

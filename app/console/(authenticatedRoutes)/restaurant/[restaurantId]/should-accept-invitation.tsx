@@ -1,7 +1,5 @@
-"use client";
-
 import Link from "next/link";
-import { IconBuildingStore } from "@tabler/icons-react";
+import { IconMail } from "@tabler/icons-react";
 import { Button } from "@/lib/components/ui/button";
 import {
     Empty,
@@ -11,35 +9,37 @@ import {
     EmptyMedia,
     EmptyTitle,
 } from "@/lib/components/ui/empty";
-import { useLocale } from "@/lib/hooks/use-locale";
 import { Heading } from "@/lib/components/ui/heading";
 import { Text } from "@/lib/components/ui/text";
 
-export default function RestaurantNotFound() {
-    const { messages } = useLocale();
-    const translates = messages.console.restaurant.notFound;
+type ShouldAcceptInvitationProps = {
+    buttonLabel: string;
+    description: string;
+    title: string;
+};
 
+export default function ShouldAcceptInvitation({
+    buttonLabel,
+    description,
+    title,
+}: ShouldAcceptInvitationProps) {
     return (
         <Empty className="rounded-2xl border border-dashed border-border bg-card shadow-sm">
             <EmptyHeader>
                 <EmptyMedia variant="icon">
-                    <IconBuildingStore />
+                    <IconMail />
                 </EmptyMedia>
                 <EmptyTitle>
-                    <Heading size="5" weight="bold">
-                        {translates.title}
-                    </Heading>
+                    <Heading size="5" weight="bold">{title}</Heading>
                 </EmptyTitle>
                 <EmptyDescription>
-                    <Text size="2">{translates.description}</Text>
+                    <Text size="2">{description}</Text>
                 </EmptyDescription>
             </EmptyHeader>
             <EmptyContent>
                 <Button asChild>
-                    <Link href="/console/dashboard">
-                        <Text size="2">
-                            {translates.actions.viewRestaurants}
-                        </Text>
+                    <Link href="/console/invitations">
+                        <Text size="2">{buttonLabel}</Text>
                     </Link>
                 </Button>
             </EmptyContent>

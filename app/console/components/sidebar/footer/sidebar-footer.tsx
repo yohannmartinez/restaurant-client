@@ -1,8 +1,7 @@
 "use client"
 
-import Image from "next/image"
-import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { IconLogout } from "@tabler/icons-react"
 import {
     SidebarFooter,
@@ -16,6 +15,7 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/lib/components/ui/popover"
+import { Avatar, AvatarFallback, AvatarImage } from "@/lib/components/ui/avatar"
 import { useAuth } from "@/lib/hooks/use-auth"
 import { useLocale } from "@/lib/hooks/use-locale"
 import { toast } from "sonner"
@@ -25,7 +25,6 @@ export default function ConsoleSidebarFooter() {
     const router = useRouter()
     const { user } = useAuth()
     const { messages } = useLocale()
-    const [hasImageError, setHasImageError] = useState(false)
     const [isLoggingOut, setIsLoggingOut] = useState(false)
 
     const fullName = user ? `${user.firstName} ${user.lastName}`.trim() : "Mon compte"
@@ -33,7 +32,6 @@ export default function ConsoleSidebarFooter() {
         ? `${user.firstName.charAt(0)}${user.lastName.charAt(0)}`.toUpperCase()
         : "MC"
     const picture = user?.picture
-    const showPicture = Boolean(picture) && !hasImageError
     const logoutLabel = messages.console.sidebar.footer.logout
 
     async function handleLogout() {
@@ -63,21 +61,12 @@ export default function ConsoleSidebarFooter() {
                                 tooltip="Mon compte"
                                 className="group-data-[collapsible=icon]:justify-center cursor-pointer"
                             >
-                                <div className="flex aspect-square rounded-lg overflow-hidden size-8 shrink-0 items-center justify-center bg-primary text-primary-foreground">
-                                    {picture && showPicture ? (
-                                        <Image
-                                            src={picture}
-                                            alt={fullName}
-                                            width={32}
-                                            height={32}
-                                            unoptimized
-                                            className="size-full object-cover"
-                                            onError={() => setHasImageError(true)}
-                                        />
-                                    ) : (
-                                        <span className="text-sm font-semibold">{initials}</span>
-                                    )}
-                                </div>
+                                <Avatar className="size-8 rounded-lg bg-primary text-primary-foreground">
+                                    {picture ? <AvatarImage src={picture} alt={fullName} /> : null}
+                                    <AvatarFallback className="rounded-lg bg-primary text-sm font-semibold text-primary-foreground">
+                                        {initials}
+                                    </AvatarFallback>
+                                </Avatar>
                                 <div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
                                     <Text size="2" truncate weight="medium">
                                         {fullName}

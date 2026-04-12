@@ -9,7 +9,7 @@ export default function RestaurantsHeader() {
     const translates = messages.console.restaurants;
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-1">
             <Heading size="6" weight="bold">{translates.title}</Heading>
             <Text as="p" size="2" className="text-muted-foreground">
                 {translates.description}

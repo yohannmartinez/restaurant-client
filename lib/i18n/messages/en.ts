@@ -147,6 +147,43 @@ export const enMessages = {
             },
         },
         restaurant: {
+            access: {
+                revoked: {
+                    title: 'You have been removed from the restaurant',
+                    description: 'You no longer have access to this restaurant in the console.',
+                },
+                invited: {
+                    title: 'You need to accept the invitation to this restaurant',
+                    description: 'Accept the invitation first to access this area.',
+                    actions: {
+                        viewInvitations: 'View my invitations',
+                    },
+                },
+            },
+            members: {
+                title: 'Members',
+                description: (restaurantName: string) => `Find the access and roles for ${restaurantName} here.`,
+                memberLabel: (userId: string) => `User ${userId.slice(0, 8)}`,
+                actions: {
+                    editRole: 'Edit role',
+                    remove: 'Remove from restaurant',
+                    openMenu: 'Open actions menu',
+                },
+                fields: {
+                    role: 'Role',
+                    status: 'Status',
+                },
+                roles: {
+                    OWNER: 'Owner',
+                    EDITOR: 'Editor',
+                },
+                statuses: {
+                    ACTIVE: 'Active',
+                    INVITED: 'Invited',
+                    REVOKED: 'Revoked',
+                },
+                empty: 'No members are linked to this restaurant yet.',
+            },
             notFound: {
                 title: 'Restaurant not found',
                 description:

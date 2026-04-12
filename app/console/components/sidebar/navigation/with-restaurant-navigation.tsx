@@ -77,7 +77,7 @@ export default function WithRestaurantNavigation() {
                 },
                 {
                     title: translates.items.team,
-                    url: `/console/restaurant/${restaurantIdFromPath}/team`,
+                    url: `/console/restaurant/${restaurantIdFromPath}/members`,
                     icon: IconUsersGroup,
                 },
                 {

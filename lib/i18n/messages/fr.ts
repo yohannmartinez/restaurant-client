@@ -147,6 +147,43 @@ export const frMessages = {
             },
         },
         restaurant: {
+            access: {
+                revoked: {
+                    title: 'Vous avez été supprimé du restaurant',
+                    description: "Vous n'avez plus accès à ce restaurant dans la console.",
+                },
+                invited: {
+                    title: "Vous devez accepter l'invitation à ce restaurant",
+                    description: "Accepte d'abord l'invitation pour accéder à cet espace.",
+                    actions: {
+                        viewInvitations: 'Voir mes invitations',
+                    },
+                },
+            },
+            members: {
+                title: 'Membres',
+                description: (restaurantName: string) => `Retrouve ici les accès et rôles des membres de ${restaurantName}.`,
+                memberLabel: (userId: string) => `Utilisateur ${userId.slice(0, 8)}`,
+                actions: {
+                    editRole: 'Modifier le role',
+                    remove: 'Retirer de ce restaurant',
+                    openMenu: "Ouvrir le menu d'actions",
+                },
+                fields: {
+                    role: 'Rôle',
+                    status: 'Statut',
+                },
+                roles: {
+                    OWNER: 'Propriétaire',
+                    EDITOR: 'Éditeur',
+                },
+                statuses: {
+                    ACTIVE: 'Actif',
+                    INVITED: 'Invité',
+                    REVOKED: 'Révoqué',
+                },
+                empty: "Aucun membre n'est associé à ce restaurant pour le moment.",
+            },
             notFound: {
                 title: 'Restaurant non trouvé',
                 description:
